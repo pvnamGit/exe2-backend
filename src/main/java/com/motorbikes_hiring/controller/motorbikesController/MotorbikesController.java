@@ -6,11 +6,10 @@ import com.motorbikes_hiring.payload.response.motorbikesResponse.MotorbikeRespon
 import com.motorbikes_hiring.payload.response.motorbikesResponse.MotorbikesListResponse;
 import com.motorbikes_hiring.payload.response.responseMessage.SuccessfulMessageResponse;
 import com.motorbikes_hiring.service.motorbikesService.MotorbikesService;
+import com.motorbikes_hiring.service.motorbikesService.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,6 +21,8 @@ public class MotorbikesController {
 
   @Autowired
   private MotorbikesService motorbikesService;
+  @Autowired
+  private TransactionService transactionService;
 
   @GetMapping("/motorbikes")
   public ResponseEntity<?> getMotorbikes () {
@@ -42,6 +43,7 @@ public class MotorbikesController {
       return ResponseEntity.badRequest().body(e.getMessage());
     }
   }
+
   @PostMapping(value = "/motorbikes")
   @ResponseStatus(HttpStatus.CREATED)
   public ResponseEntity<?> createMotorbike (@RequestBody(required = false) MotorbikeCreationRequest request) {
@@ -52,5 +54,6 @@ public class MotorbikesController {
       return ResponseEntity.badRequest().body(exception.getMessage());
     }
   }
+
 
 }
