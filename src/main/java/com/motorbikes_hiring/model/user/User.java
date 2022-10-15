@@ -41,6 +41,8 @@ public class User {
   private String avatar;
   private String facebookUrl;
   private Boolean canCrud = false;
+
+  private Boolean isRequestPayment = false;
   @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
   private String authorizationToken;
   @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

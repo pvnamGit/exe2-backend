@@ -29,6 +29,8 @@ public class TransactionService {
 
     public Transactions createTransaction (TransactionRequest request) {
         User user = userRepository.findById(request.getUserId()).get();
+        user.setIsRequestPayment(true);
+        userRepository.save(user);
         Transactions transaction = new Transactions(request.getTransactionId(), user);
         transactionRepository.save(transaction);
         return transaction;
