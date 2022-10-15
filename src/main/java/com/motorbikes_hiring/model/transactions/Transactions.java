@@ -21,4 +21,9 @@ public class Transactions {
   @ManyToOne
   @JoinColumn(name = "user_id")
   private User user;
+
+    public Transactions(Long id, int transactionNumber) {
+      this.id = id;
+      this.transactionNumber= transactionNumber;
+    }
 }
