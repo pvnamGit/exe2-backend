@@ -22,8 +22,7 @@ public class Transactions {
   @JoinColumn(name = "user_id")
   private User user;
 
-    public Transactions(Long id, int transactionNumber) {
-      this.id = id;
+    public Transactions( int transactionNumber) {
       this.transactionNumber= transactionNumber;
     }
 }

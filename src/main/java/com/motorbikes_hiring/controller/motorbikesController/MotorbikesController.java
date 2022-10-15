@@ -37,10 +37,10 @@ public class MotorbikesController {
     }
   }
 
-  @PostMapping("/2/{id}")
+  @PostMapping("/{id}")
   public ResponseEntity<?> createTransactionNumber (@PathVariable("id") Long id ) {
     try {
-      Transactions transactions = transactionService.getTransactionNumber(id);
+      Transactions transactions = transactionService.createRandomNumber(id);
       return ResponseEntity.ok().body(new TransactionResponse(transactions));
     }catch (NoSuchElementException ex) {
       return ResponseEntity.badRequest().body(new ErrorMessageResponse(ex.getMessage()));
