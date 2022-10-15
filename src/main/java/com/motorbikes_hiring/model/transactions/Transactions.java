@@ -22,7 +22,8 @@ public class Transactions {
   @JoinColumn(name = "user_id")
   private User user;
 
-    public Transactions( int transactionNumber) {
+    public Transactions( int transactionNumber, User user) {
       this.transactionNumber= transactionNumber;
+      this.user = user;
     }
 }
