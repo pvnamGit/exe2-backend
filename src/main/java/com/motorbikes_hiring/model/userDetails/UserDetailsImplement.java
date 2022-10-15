@@ -24,13 +24,15 @@ public class UserDetailsImplement implements UserDetails {
     @JsonIgnore // Tránh việc trả về password dưới dạng JSON
     private String password;
 
+    private Boolean canCrud;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImplement(Long id, String username, String email, String password, Collection<? extends GrantedAuthority> authorities) {
+    public UserDetailsImplement(Long id, String username, String email, String password, Boolean canCrud, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
+        this.canCrud = canCrud;
         this.authorities = authorities;
     }
 
@@ -46,6 +48,7 @@ public class UserDetailsImplement implements UserDetails {
                 user.getUsername(),
                 user.getEmail(),
                 user.getPassword(),
+                user.getCanCrud(),
                 authorities
         );
     }
@@ -72,6 +75,8 @@ public class UserDetailsImplement implements UserDetails {
     public String getEmail() {
         return email;
     }
+
+    public Boolean getCanCrud () { return canCrud; }
 
     //Tất cả để true, user chỉ việc đăng kí thành công sẽ dùng được tài khoản ngay
     @Override

@@ -37,14 +37,10 @@ public class User {
   @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
   private String password;
   private String phone;
-  private Integer grade;
   private String address;
   private String avatar;
   private String facebookUrl;
-  private String affiliate;
-  private Double gpa;
-  private String gender;
-  private String birthday;
+  private Boolean canCrud = false;
   @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
   private String authorizationToken;
   @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

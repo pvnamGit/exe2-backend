@@ -15,15 +15,18 @@ public class JwtResponse {
     private Long id;
     private String username;
     private String email;
+
+    private Boolean canCrud;
     private List<String> roles;
 
 
 
-    public JwtResponse(String accessToken, Long id, String username, String email, List<String> roles) {
+    public JwtResponse(String accessToken, Long id, String username, String email, Boolean canCrud, List<String> roles) {
         this.access_token = accessToken;
         this.id = id;
         this.username = username;
         this.email = email;
+        this.canCrud = canCrud;
         this.roles = roles;
     }
 }

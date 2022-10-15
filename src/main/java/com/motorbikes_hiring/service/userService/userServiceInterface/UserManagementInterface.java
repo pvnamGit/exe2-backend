@@ -13,7 +13,7 @@ public interface UserManagementInterface {
 
     User getUserById(Long id);
 
-    UserProfileResponse getUserProfile(Long id);
+    User getUserProfile(Long id);
 
     UserListResponse getAllUser(Integer page, Integer limit);
 
