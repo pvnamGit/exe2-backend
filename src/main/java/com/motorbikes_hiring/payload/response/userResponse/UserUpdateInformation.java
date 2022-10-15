@@ -18,22 +18,13 @@ public class UserUpdateInformation {
     private String address;
     private String avatar;
     private String facebookUrl;
-    private String affiliate;
-    private Double gpa;
-    private String gender;
-    private String birthday;
 
     public UserUpdateInformation(User user){
         this.id = user.getId();
         this.fullName = user.getFullName();
         this.phone = user.getPhone();
-        this.grade = user.getGrade();
         this.address = user.getAddress();
         this.avatar = user.getAvatar();
         this.facebookUrl = user.getFacebookUrl();
-        this.affiliate = user.getAffiliate();
-        this.gpa = user.getGpa();
-        this.gender = user.getGender();
-        this.birthday = user.getBirthday();
     }
 }

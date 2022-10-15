@@ -65,13 +65,9 @@ public class UserManagementImplement implements UserManagementInterface {
         user.getFullName(),
         user.getEmail(),
         user.getPhone(),
-        user.getGrade(),
         user.getAddress(),
         user.getFacebookUrl(),
-        user.getAffiliate(),
         user.getAvatar(),
-        user.getGpa(),
-        user.getGender(),
         user.getRoles()
     );
   }
@@ -108,13 +104,6 @@ public class UserManagementImplement implements UserManagementInterface {
       }
     }
 
-    if (updateProfileRequest.getGrade() != null) {
-      if (updateProfileRequest.getGrade().isEmpty()) {
-        user.setGrade(null);
-      } else {
-        user.setGrade(Integer.parseInt(updateProfileRequest.getGrade()));
-      }
-    }
     //else if (updateProfileRequest.getGrade().toString().isEmpty()){
     //  user.setGrade(null);
     //}
@@ -124,14 +113,6 @@ public class UserManagementImplement implements UserManagementInterface {
         user.setAddress(null);
       } else {
         user.setAddress(updateProfileRequest.getAddress());
-      }
-    }
-
-    if (updateProfileRequest.getAffiliate() != null) {
-      if (updateProfileRequest.getAffiliate().isEmpty()) {
-        user.setAffiliate(null);
-      } else {
-        user.setAffiliate(updateProfileRequest.getAffiliate());
       }
     }
 
@@ -148,29 +129,6 @@ public class UserManagementImplement implements UserManagementInterface {
         user.setFacebookUrl(null);
       } else {
         user.setFacebookUrl(updateProfileRequest.getFacebookUrl());
-      }
-    }
-
-    if (updateProfileRequest.getGender() != null) {
-      if (updateProfileRequest.getGender().isEmpty()) {
-        user.setGender(null);
-      } else {
-        user.setGender(updateProfileRequest.getGender());
-      }
-    }
-    if (updateProfileRequest.getGpa() != null) {
-      if (updateProfileRequest.getGpa().isEmpty()) {
-        user.setGpa(null);
-      } else {
-        user.setGpa(Double.parseDouble(updateProfileRequest.getGpa()));
-      }
-    }
-
-    if (updateProfileRequest.getBirthday() != null) {
-      if (updateProfileRequest.getBirthday().isEmpty()) {
-        user.setBirthday(null);
-      } else {
-        user.setBirthday(updateProfileRequest.getBirthday());
       }
     }
 
