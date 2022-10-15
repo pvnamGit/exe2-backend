@@ -40,6 +40,7 @@ public class User {
   private String address;
   private String avatar;
   private String facebookUrl;
+  private Boolean canCrud = false;
   @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
   private String authorizationToken;
   @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

@@ -55,21 +55,12 @@ public class UserManagementImplement implements UserManagementInterface {
   }
 
   @Override
-  public UserProfileResponse getUserProfile(Long id) {
+  public User getUserProfile(Long id) {
     User user = userRepository.findById(id)
         .orElseThrow(() -> {
           throw new NoSuchElementException("Not found user");
         });
-    return new UserProfileResponse(
-        user.getUsername(),
-        user.getFullName(),
-        user.getEmail(),
-        user.getPhone(),
-        user.getAddress(),
-        user.getFacebookUrl(),
-        user.getAvatar(),
-        user.getRoles()
-    );
+    return user;
   }
 
   @Override

@@ -11,9 +11,11 @@ import java.io.Serializable;
 @Setter
 @AllArgsConstructor
 public class MotorbikeCreationRequest implements Serializable {
-  private String title;
-  private String description;
-  private double cost;
-  private int durationDay;
-  private MultipartFile files;
+  private String title = "";
+  private String description = "";
+  private String contactInfo = "";
+  private Long userId;
+  private double cost = 0;
+  private int durationDay = 0;
+  private MultipartFile files = null;
 }

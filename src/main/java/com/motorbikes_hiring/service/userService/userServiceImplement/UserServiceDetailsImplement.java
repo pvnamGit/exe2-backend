@@ -101,6 +101,7 @@ public class UserServiceDetailsImplement implements UserDetailsService, UserServ
         userDetails.getId(),
         userDetails.getUsername(),
         userDetails.getEmail(),
+        userDetails.getCanCrud(),
         roles
     );
   }
