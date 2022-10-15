@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 
 @SpringBootApplication
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://motorbike-hiring.herokuapp.com/")
 public class MotorbikesHiringApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MotorbikesHiringApplication.class, args);
