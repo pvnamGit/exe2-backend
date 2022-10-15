@@ -57,7 +57,7 @@ public class AuthenticateController {
   @PostMapping("/verify-authorization")
   public ResponseEntity<?> verifyAuthorization(@RequestHeader(name = "Authorization") String accessToken) {
     try {
-      userService.verifyAccessToken(accessToken);
+//      userService.verifyAccessToken(accessToken);
       return ResponseEntity.ok().build();
     } catch (NoSuchElementException ex) {
       return ResponseEntity.badRequest().body(new ErrorMessageResponse(ex.getMessage()));
