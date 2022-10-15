@@ -2,6 +2,7 @@ package com.motorbikes_hiring.service.motorbikesService;
 
 import com.motorbikes_hiring.model.transactions.Transactions;
 import com.motorbikes_hiring.model.user.User;
+import com.motorbikes_hiring.payload.request.motorbikes.TransactionRequest;
 import com.motorbikes_hiring.repository.motorbikes.MotorbikesRepository;
 import com.motorbikes_hiring.repository.motorbikes.TransactionRepository;
 import com.motorbikes_hiring.repository.user.UserRepository;
@@ -26,9 +27,9 @@ public class TransactionService {
         return (int)(Math.random() * (999999 - 111111 + 1) + 111111);
     }
 
-    public Transactions createTransaction (String accessToken, Integer transactionId) {
-        User user = userRepository.findByAuthorizationToken(accessToken).get();
-        Transactions transaction = new Transactions(transactionId, user);
+    public Transactions createTransaction (TransactionRequest request) {
+        User user = userRepository.findById(request.getUserId()).get();
+        Transactions transaction = new Transactions(request.getTransactionId(), user);
         transactionRepository.save(transaction);
         return transaction;
     }
