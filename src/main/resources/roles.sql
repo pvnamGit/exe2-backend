@@ -1,0 +1,1 @@
+INSERT INTO public.roles(user_role) VALUES ('SUPER_ADMIN', 'ADMIN', 'USER');
