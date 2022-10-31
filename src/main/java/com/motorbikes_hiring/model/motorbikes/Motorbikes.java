@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -17,6 +18,10 @@ public class Motorbikes implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+
+  private LocalDateTime createdAt = LocalDateTime.now();
+
+  private LocalDateTime updatedAt = LocalDateTime.now();
   private String title = "";
   private String description = "";
 

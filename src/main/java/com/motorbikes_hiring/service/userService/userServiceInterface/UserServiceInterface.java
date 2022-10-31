@@ -6,16 +6,16 @@ import com.motorbikes_hiring.payload.request.userRequest.LoginRequest;
 import com.motorbikes_hiring.payload.request.userRequest.RegistrationRequest;
 import com.motorbikes_hiring.payload.response.authResponse.JwtResponse;
 
-import javax.mail.MessagingException;
+//import javax.mail.MessagingException;
 
 public interface UserServiceInterface {
     JwtResponse handleUserLogin(LoginRequest loginRequest) throws Exception;
 
-    void handleUserRegistration(RegistrationRequest registrationRequest) throws MessagingException;
+    void handleUserRegistration(RegistrationRequest registrationRequest);
 
     void activeAccount(String activateToken);
 
-    void sendTokenForgetPassword(String email) throws MessagingException;
+    void sendTokenForgetPassword(String email);
 
     User verifiedResetCode(Long resetCode);
 
