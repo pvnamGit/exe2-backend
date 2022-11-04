@@ -29,25 +29,23 @@ public class DropboxService {
   @Autowired
   private DropboxClient dropboxClient;
 
-  public void createFolder(String courseId, String materialId) throws DbxException {
-    dropboxClient.dropboxClient().files().createFolderV2("/Course/" + courseId + "/" + materialId);
+  public void createFolder(String userId, String motorbikeId) throws DbxException {
+    dropboxClient.dropboxClient().files().createFolderV2("/user/" + userId + "/" + motorbikeId);
   }
 
 
-  public Object uploadFile(MultipartFile file, String courseId, String materialId) throws IOException, DbxException {
+  public Object uploadFile(MultipartFile file, String userId, String motorbikeId) throws IOException, DbxException {
     try {
 
       // Đọc file bằng Byte Aray Input Stream
       ByteArrayInputStream inputStream = new ByteArrayInputStream(file.getBytes());
 
-      //Dùng FileMetadata của dropbox Api để upload thông ra link :
-      // SWP/Cousre/:CourseID/Material/MaterialId
       FileMetadata uploadMetaData = dropboxClient.dropboxClient().files().
-          uploadBuilder("/Course/" + courseId + "/" + materialId + "/" + file.getOriginalFilename()).uploadAndFinish(file.getInputStream());
+          uploadBuilder("/user/" + userId + "/" + motorbikeId + "/" + file.getOriginalFilename()).uploadAndFinish(file.getInputStream());
 
       //Sau khi upload thì tạo luôn link shareing bằng ShareLinkMetadata
       SharedLinkMetadata sharedLinkMetadata = dropboxClient.dropboxClient().sharing().
-          createSharedLinkWithSettings("/Course/" + courseId + "/" + materialId + "/" + file.getOriginalFilename());
+          createSharedLinkWithSettings("/user/" + userId + "/" + motorbikeId + "/" + file.getOriginalFilename());
       log.info("upload meta data =====> {}", uploadMetaData.toString());
       inputStream.close();
 
@@ -55,7 +53,7 @@ public class DropboxService {
 
 
       //Gán thông tin vào material response
-      return null;
+      return sharedLinkMetadata.getUrl();
     } catch (CreateSharedLinkWithSettingsErrorException ex) {
       log.error("Error at CreateSharedLinkWithSettingsErrorException : " + ex.getMessage());
     } catch (DbxException ex) {
@@ -64,12 +62,12 @@ public class DropboxService {
     return null;
   }
 
-  public Object uploadOverwrittenFile(MultipartFile file, String courseId, String materialId) throws IOException, DbxException {
+  public Object uploadOverwrittenFile(MultipartFile file, String userId, String motorbikeId) throws IOException, DbxException {
     try {
 
       //Kiểm tra nếu tutor update file trùng tên thì ghi đè lên file cũ, vẫn giữ link sharing
-      //Kiểm tra nếu tutor update file mà khác tên thì xóa luôn folder chưa materialId, tạo lại folder Id cũ những bên trong rỗng
-      Boolean fileNameExisted = duplicateFileName(courseId, materialId, file.getOriginalFilename());
+      //Kiểm tra nếu tutor update file mà khác tên thì xóa luôn folder chưa motorbikeId, tạo lại folder Id cũ những bên trong rỗng
+      Boolean fileNameExisted = duplicateFileName(userId, motorbikeId, file.getOriginalFilename());
       ByteArrayInputStream inputStream = new ByteArrayInputStream(file.getBytes());
 
       FileMetadata uploadMetaData;
@@ -77,21 +75,21 @@ public class DropboxService {
 
       if (!fileNameExisted) { // Fie Attach không trùng tên file cũ
         //Xóa file cũ
-        deleteMaterialFolderId("/Course/" + courseId + "/" + materialId);
+        deleteMaterialFolderId("/user/" + userId + "/" + motorbikeId);
         //upload file mới
         uploadMetaData = dropboxClient.dropboxClient().files().
-            uploadBuilder("/Course/" + courseId + "/" + materialId + "/" + file.getOriginalFilename())
+            uploadBuilder("/user/" + userId + "/" + motorbikeId + "/" + file.getOriginalFilename())
             .uploadAndFinish(file.getInputStream());
         // Tạo link sharing mới
         sharedLinkMetadata = dropboxClient.dropboxClient().sharing().
-            createSharedLinkWithSettings("/Course/" + courseId + "/" + materialId + "/" + file.getOriginalFilename());
+            createSharedLinkWithSettings("/user/" + userId + "/" + motorbikeId + "/" + file.getOriginalFilename());
       } else {
 
         //Ghi đè
         uploadMetaData = dropboxClient.dropboxClient().files().
-            uploadBuilder("/Course/" + courseId + "/" + materialId + "/" + file.getOriginalFilename())
+            uploadBuilder("/user/" + userId + "/" + motorbikeId + "/" + file.getOriginalFilename())
             .withMode(WriteMode.OVERWRITE).uploadAndFinish(file.getInputStream());
-        String linkSharing = getShareLink(courseId, materialId, file.getOriginalFilename());
+        String linkSharing = getShareLink(userId, motorbikeId, file.getOriginalFilename());
 
         //Giữ link sharing cũ
         sharedLinkMetadata = dropboxClient.dropboxClient().sharing().getSharedLinkMetadata(linkSharing);
@@ -108,8 +106,8 @@ public class DropboxService {
   }
 
 
-  public List<Map<String, Object>> getFileList(String courseId, String materialId) throws IOException, DbxException {
-    ListFolderResult entries = dropboxClient.dropboxClient().files().listFolder("/Course/" + courseId + "/" + materialId + "/");
+  public List<Map<String, Object>> getFileList(String userId, String motorbikeId) throws IOException, DbxException {
+    ListFolderResult entries = dropboxClient.dropboxClient().files().listFolder("/user/" + userId + "/" + motorbikeId + "/");
     List<Map<String, Object>> result = new ArrayList<>();
 
     while (true) {
@@ -133,10 +131,10 @@ public class DropboxService {
   }
 
   //Lấy link sharing của file trong dropbox
-  public String getShareLink(String courseId, String materialId, String fileName) {
+  public String getShareLink(String userId, String motorbikeId, String fileName) {
     try {
       ListSharedLinksResult sharedLinkMetadata = dropboxClient.dropboxClient().sharing().listSharedLinksBuilder()
-          .withPath("/Course/" + courseId + "/" + materialId + "/" + fileName).withDirectOnly(true).start();
+          .withPath("/user/" + userId + "/" + motorbikeId + "/" + fileName).withDirectOnly(true).start();
       for (SharedLinkMetadata linkMetadata : sharedLinkMetadata.getLinks()) {
         return linkMetadata.getUrl();
       }
@@ -150,8 +148,8 @@ public class DropboxService {
 
 
   //Kiểm tra nếu trùng tên thì ghi đè
-  public Boolean duplicateFileName(String courseId, String materialId, String fileName) throws DbxException {
-    ListFolderResult entries = dropboxClient.dropboxClient().files().listFolder("/Course/" + courseId + "/" + materialId + "/");
+  public Boolean duplicateFileName(String userId, String motorbikeId, String fileName) throws DbxException {
+    ListFolderResult entries = dropboxClient.dropboxClient().files().listFolder("/user/" + userId + "/" + motorbikeId + "/");
     for (Metadata metadata : entries.getEntries()) {
       if (metadata.getName().equals(fileName))
         return true;

@@ -32,15 +32,16 @@ public class Motorbikes implements Serializable {
   @JoinColumn(name = "user_id")
   @JsonIgnore
   private User user;
-  private String filePath = null;
+  private String filePath = "";
   private Boolean status = true;
 
-  public Motorbikes(String title, String description, String contactInfo, double cost, int durationDay, User user) {
+  public Motorbikes(String title, String description, String contactInfo, double cost, int durationDay, String filePath, User user) {
     this.title = title;
     this.description = description;
     this.contactInfo = contactInfo;
     this.cost = cost;
     this.durationDay = durationDay;
+    this.filePath = filePath;
     this.user = user;
   }
 }

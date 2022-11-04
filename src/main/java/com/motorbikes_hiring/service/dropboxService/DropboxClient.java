@@ -12,7 +12,7 @@ public class DropboxClient {
     private final String ACCESS_TOKEN = "grW4Z3mk2P8AAAAAAAAAARteeFq71F9bZvsEgmcH5JszBU1cAguiekc9zl0HqBB4";
 
     public DbxClientV2 dropboxClient() throws DbxException{
-        DbxRequestConfig config = new DbxRequestConfig("dropbox/SWP391");
+        DbxRequestConfig config = new DbxRequestConfig("dropbox/motorbike_go");
         DbxClientV2 client = new DbxClientV2(config,ACCESS_TOKEN);
         return client;
     }

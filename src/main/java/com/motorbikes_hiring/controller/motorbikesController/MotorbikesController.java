@@ -9,14 +9,15 @@ import com.motorbikes_hiring.service.motorbikesService.MotorbikesService;
 import com.motorbikes_hiring.service.motorbikesService.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
 @RequestMapping("api/public")
-@CrossOrigin(origins = "http://localhost:3000")
 public class MotorbikesController {
 
   @Autowired
@@ -46,7 +47,7 @@ public class MotorbikesController {
 
   @PostMapping(value = "/motorbikes")
   @ResponseStatus(HttpStatus.CREATED)
-  public ResponseEntity<?> createMotorbike (@RequestBody(required = false) MotorbikeCreationRequest request) {
+  public ResponseEntity<?> createMotorbike (MotorbikeCreationRequest request) throws IOException {
     try {
       motorbikesService.createMotorBike(request);
       return ResponseEntity.ok().body(new SuccessfulMessageResponse("Create motorbike success"));
