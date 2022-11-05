@@ -13,4 +13,5 @@ import java.util.List;
 public class MotorbikesListResponse {
   private Boolean status = true;
   private List<Motorbikes> data;
+  private Long total;
 }

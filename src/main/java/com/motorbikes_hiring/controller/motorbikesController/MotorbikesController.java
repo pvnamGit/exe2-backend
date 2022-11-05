@@ -26,10 +26,11 @@ public class MotorbikesController {
   private TransactionService transactionService;
 
   @GetMapping("/motorbikes")
-  public ResponseEntity<?> getMotorbikes () {
+  public ResponseEntity<?> getMotorbikes (@RequestParam(name = "title", required = false, defaultValue = "") String title,
+                                          @RequestParam(name = "page", required = false, defaultValue = "1") Integer page) {
     try {
-      List<Motorbikes> motorbikesList = motorbikesService.getMotorbikes();
-      return ResponseEntity.ok(new MotorbikesListResponse(true, motorbikesList));
+      MotorbikesListResponse response = motorbikesService.getMotorbikes(title, page);
+      return ResponseEntity.ok(response);
     }catch (Exception e) {
       return ResponseEntity.badRequest().body(e.getMessage());
     }
