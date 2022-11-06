@@ -14,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
-import javax.mail.MessagingException;
+//import javax.mail.MessagingException;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.NoSuchElementException;
@@ -43,8 +43,7 @@ public class AuthenticateController {
 
 
   @PostMapping("/signup")
-  public ResponseEntity<?> registerUser(@Valid @RequestBody RegistrationRequest registrationRequest)
-      throws MessagingException {
+  public ResponseEntity<?> registerUser(@Valid @RequestBody RegistrationRequest registrationRequest){
     try {
       userService.handleUserRegistration(registrationRequest);
       return ResponseEntity.ok().body(new SuccessfulMessageResponse("User registered successfully!"));
@@ -80,8 +79,7 @@ public class AuthenticateController {
 
   //Sau khi nhập xong email bấm enter thì chuyển tới trang nhập code thì
   @PostMapping("/send-forgot-password")
-  public ResponseEntity<?> sendForgetPassword(@RequestParam(name = "email") String email)
-      throws MessagingException {
+  public ResponseEntity<?> sendForgetPassword(@RequestParam(name = "email") String email) {
     try {
       userService.sendTokenForgetPassword(email);
       return ResponseEntity.ok().body(new SuccessfulMessageResponse("Reset code sent to your email"));

@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 
 @SpringBootApplication
-@CrossOrigin(origins = "https://motorbike-hiring.herokuapp.com/")
+@CrossOrigin(origins = "http://localhost:3000")
 public class MotorbikesHiringApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MotorbikesHiringApplication.class, args);
@@ -26,7 +26,7 @@ public class MotorbikesHiringApplication {
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/api/**")
 						// .allowedOrigins(corsOrigin)
-						.allowedMethods("GET", "POST", "PUT", "DELETE");
+						.allowedMethods("GET", "POST", "PUT", "DELETE").allowedOrigins("https://motorbike-hiring.herokuapp.com/");
 			}
 		};
 	}

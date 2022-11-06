@@ -9,14 +9,15 @@ import com.motorbikes_hiring.service.motorbikesService.MotorbikesService;
 import com.motorbikes_hiring.service.motorbikesService.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
 @RequestMapping("api/public")
-@CrossOrigin(origins = "https://motorbike-hiring.herokuapp.com/")
 public class MotorbikesController {
 
   @Autowired
@@ -25,10 +26,11 @@ public class MotorbikesController {
   private TransactionService transactionService;
 
   @GetMapping("/motorbikes")
-  public ResponseEntity<?> getMotorbikes () {
+  public ResponseEntity<?> getMotorbikes (@RequestParam(name = "title", required = false, defaultValue = "") String title,
+                                          @RequestParam(name = "page", required = false, defaultValue = "1") Integer page) {
     try {
-      List<Motorbikes> motorbikesList = motorbikesService.getMotorbikes();
-      return ResponseEntity.ok(new MotorbikesListResponse(true, motorbikesList));
+      MotorbikesListResponse response = motorbikesService.getMotorbikes(title, page);
+      return ResponseEntity.ok(response);
     }catch (Exception e) {
       return ResponseEntity.badRequest().body(e.getMessage());
     }
@@ -46,7 +48,7 @@ public class MotorbikesController {
 
   @PostMapping(value = "/motorbikes")
   @ResponseStatus(HttpStatus.CREATED)
-  public ResponseEntity<?> createMotorbike (@RequestBody(required = false) MotorbikeCreationRequest request) {
+  public ResponseEntity<?> createMotorbike (MotorbikeCreationRequest request) throws IOException {
     try {
       motorbikesService.createMotorBike(request);
       return ResponseEntity.ok().body(new SuccessfulMessageResponse("Create motorbike success"));

@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -30,6 +31,10 @@ public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+
+  private LocalDateTime createdAt = LocalDateTime.now();
+
+  private LocalDateTime updatedAt = LocalDateTime.now();
   @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
   private String username;
   private String email;
@@ -50,7 +55,7 @@ public class User {
   @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
   private String activateToken;
   @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-  private Boolean activeStatus = false;
+  private Boolean activeStatus = true;
   @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
   private Boolean status = true;
   @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

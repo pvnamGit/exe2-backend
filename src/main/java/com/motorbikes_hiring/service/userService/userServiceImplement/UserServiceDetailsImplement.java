@@ -10,7 +10,7 @@ import com.motorbikes_hiring.payload.request.userRequest.RegistrationRequest;
 import com.motorbikes_hiring.payload.response.authResponse.JwtResponse;
 import com.motorbikes_hiring.repository.role.RoleRepository;
 import com.motorbikes_hiring.repository.user.UserRepository;
-import com.motorbikes_hiring.service.mailSenderService.MailSenderService;
+//import com.motorbikes_hiring.service.mailSenderService.MailSenderService;
 import com.motorbikes_hiring.service.userService.userServiceInterface.UserServiceInterface;
 import com.motorbikes_hiring.utils.jwtUtils.JWTUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +26,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.mail.MessagingException;
+//import javax.mail.MessagingException;
 import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -54,8 +54,8 @@ public class UserServiceDetailsImplement implements UserDetailsService, UserServ
   // @Autowired
   // private RefreshTokenService refreshTokenService;
 
-  @Autowired
-  private MailSenderService mailSenderService;
+//  @Autowired
+//  private MailSenderService mailSenderService;
 
 
   @Override
@@ -121,7 +121,7 @@ public class UserServiceDetailsImplement implements UserDetailsService, UserServ
   }
 
   @Override
-  public void handleUserRegistration(RegistrationRequest registrationRequest) throws MessagingException {
+  public void handleUserRegistration(RegistrationRequest registrationRequest)  {
     if (userRepository.existsByUsername(registrationRequest.getUsername())) {
       throw new IllegalStateException("Error: Username is already taken!");
     }
@@ -162,7 +162,7 @@ public class UserServiceDetailsImplement implements UserDetailsService, UserServ
     );
     user.setRoles(roles);
     userRepository.save(user);
-    mailSenderService.sendEmailActivate(user.getUsername(), stringOfToken, user.getEmail());
+//    mailSenderService.sendEmailActivate(user.getUsername(), stringOfToken, user.getEmail());
   }
 
   @Override
@@ -174,14 +174,14 @@ public class UserServiceDetailsImplement implements UserDetailsService, UserServ
   }
 
   @Override
-  public void sendTokenForgetPassword(String email) throws MessagingException {
+  public void sendTokenForgetPassword(String email)  {
     User user = userRepository.findByEmail(email).orElseThrow(() -> {
       throw new NoSuchElementException("Email not found");
     });
     Long resetCode = 100000 + (long) (Math.random() * (999999 - 100000));
     user.setResetPasswordCode(resetCode);
     userRepository.save(user);
-    mailSenderService.sendEmailResetPassword(user.getUsername(), resetCode, user.getEmail());
+//    mailSenderService.sendEmailResetPassword(user.getUsername(), resetCode, user.getEmail());
   }
 
   @Override

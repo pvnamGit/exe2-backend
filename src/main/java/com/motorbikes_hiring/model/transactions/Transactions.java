@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -18,6 +19,9 @@ public class Transactions {
 
   private int transactionNumber;
 
+  private LocalDateTime createdAt = LocalDateTime.now();
+
+  private LocalDateTime updatedAt = LocalDateTime.now();
   @ManyToOne
   @JoinColumn(name = "user_id")
   private User user;
