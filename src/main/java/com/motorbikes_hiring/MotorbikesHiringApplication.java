@@ -26,7 +26,7 @@ public class MotorbikesHiringApplication {
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/api/**")
 						// .allowedOrigins(corsOrigin)
-						.allowedMethods("GET", "POST", "PUT", "DELETE").allowedOrigins("https://motorbike-hiring-backend.herokuapp.com");
+						.allowedMethods("GET", "POST", "PUT", "DELETE").allowedOrigins("https://motorbike-go.herokuapp.com/");
 			}
 		};
 	}
