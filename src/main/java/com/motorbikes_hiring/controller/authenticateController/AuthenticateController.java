@@ -20,7 +20,7 @@ import java.net.URI;
 import java.util.NoSuchElementException;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("api/auth")
 
 public class AuthenticateController {
 
