@@ -22,8 +22,13 @@ public class Motorbikes implements Serializable {
   private LocalDateTime createdAt = LocalDateTime.now();
 
   private LocalDateTime updatedAt = LocalDateTime.now();
+  @Column(columnDefinition = "TEXT", length = Integer.MAX_VALUE)
   private String title = "";
+  @Column(columnDefinition = "TEXT", length = Integer.MAX_VALUE)
+
   private String description = "";
+
+  @Column(columnDefinition = "TEXT", length = Integer.MAX_VALUE)
 
   private String contactInfo = "";
   private double cost = 0;
