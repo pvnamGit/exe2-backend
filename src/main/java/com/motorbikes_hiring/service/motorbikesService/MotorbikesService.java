@@ -4,10 +4,13 @@ import com.dropbox.core.DbxException;
 import com.motorbikes_hiring.model.motorbikes.Motorbikes;
 import com.motorbikes_hiring.model.user.User;
 import com.motorbikes_hiring.payload.request.motorbikes.MotorbikeCreationRequest;
+import com.motorbikes_hiring.payload.request.motorbikes.MotorbikeUpdateRequest;
 import com.motorbikes_hiring.payload.response.motorbikesResponse.MotorbikesListResponse;
 import com.motorbikes_hiring.repository.motorbikes.MotorbikesRepository;
 import com.motorbikes_hiring.repository.user.UserRepository;
 import com.motorbikes_hiring.service.dropboxService.DropboxService;
+
+import org.apache.commons.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,8 +18,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.io.Console;
 import java.io.IOException;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Random;
 
 @Service
@@ -68,6 +73,32 @@ public class MotorbikesService {
   public void deleteMotorbike(Long id) {
     Motorbikes motorbikes = motorbikesRepository.getById(id);
     motorbikesRepository.delete(motorbikes);
+  }
+
+  public Motorbikes updateMotorbike(MotorbikeUpdateRequest request, Long id) {
+      Motorbikes motorbikes = motorbikesRepository.getById(id);
+      if(request.getTitle()!=null){
+        motorbikes.setTitle(request.getTitle());
+      }
+      if(request.getContactInfo()!= null){
+        motorbikes.setContactInfo(request.getContactInfo());
+      }
+      if(request.getDescription()!= null){
+        motorbikes.setDescription(request.getDescription());
+      }
+      if(request.getCost() != null){
+        motorbikes.setCost(request.getCost());
+      }
+      if(request.getDurationDay()!= null){
+        motorbikes.setDurationDay(request.getDurationDay());
+      }
+      if(request.getFiles() != null){
+        motorbikes.setFilePath(request.getFiles());
+      }
+
+      motorbikesRepository.save(motorbikes);
+      return motorbikesRepository.getById(id);
+    
   }
 
 }
