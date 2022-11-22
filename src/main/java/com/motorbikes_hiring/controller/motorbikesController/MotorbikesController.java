@@ -2,6 +2,7 @@ package com.motorbikes_hiring.controller.motorbikesController;
 
 import com.motorbikes_hiring.model.motorbikes.Motorbikes;
 import com.motorbikes_hiring.payload.request.motorbikes.MotorbikeCreationRequest;
+import com.motorbikes_hiring.payload.request.motorbikes.MotorbikeUpdateRequest;
 import com.motorbikes_hiring.payload.response.motorbikesResponse.MotorbikeResponse;
 import com.motorbikes_hiring.payload.response.motorbikesResponse.MotorbikesListResponse;
 import com.motorbikes_hiring.payload.response.responseMessage.SuccessfulMessageResponse;
@@ -26,29 +27,30 @@ public class MotorbikesController {
   private TransactionService transactionService;
 
   @GetMapping("/motorbikes")
-  public ResponseEntity<?> getMotorbikes (@RequestParam(name = "title", required = false, defaultValue = "") String title,
-                                          @RequestParam(name = "page", required = false, defaultValue = "1") Integer page) {
+  public ResponseEntity<?> getMotorbikes(
+      @RequestParam(name = "title", required = false, defaultValue = "") String title,
+      @RequestParam(name = "page", required = false, defaultValue = "1") Integer page) {
     try {
       MotorbikesListResponse response = motorbikesService.getMotorbikes(title, page);
       return ResponseEntity.ok(response);
-    }catch (Exception e) {
+    } catch (Exception e) {
       return ResponseEntity.badRequest().body(e.getMessage());
     }
   }
 
   @GetMapping("/motorbike/{id}")
-  public ResponseEntity<?> getMotorbike (@PathVariable(name = "id") Long id) {
+  public ResponseEntity<?> getMotorbike(@PathVariable(name = "id") Long id) {
     try {
       Motorbikes motorbike = motorbikesService.getMotorbike(id);
       return ResponseEntity.ok(new MotorbikeResponse(true, motorbike));
-    }catch (Exception e) {
+    } catch (Exception e) {
       return ResponseEntity.badRequest().body(e.getMessage());
     }
   }
 
   @PostMapping(value = "/motorbikes")
   @ResponseStatus(HttpStatus.CREATED)
-  public ResponseEntity<?> createMotorbike (MotorbikeCreationRequest request) throws IOException {
+  public ResponseEntity<?> createMotorbike(MotorbikeCreationRequest request) throws IOException {
     try {
       motorbikesService.createMotorBike(request);
       return ResponseEntity.ok().body(new SuccessfulMessageResponse("Create motorbike success"));
@@ -57,5 +59,18 @@ public class MotorbikesController {
     }
   }
 
+  @PutMapping("/motorbike/{id}")
+  @ResponseStatus(HttpStatus.CREATED)
+  public ResponseEntity<?> updateMotorbike(@RequestBody MotorbikeUpdateRequest request,
+  @PathVariable(name = "id") Long id) {
+        try{
+           motorbikesService.updateMotorbike(request, id );
+                return ResponseEntity.ok(new  SuccessfulMessageResponse("update motorbike success"));
+
+        }catch(Exception e){
+          return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    
+  }
 
 }
