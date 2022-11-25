@@ -42,7 +42,7 @@ public class MotorbikesController {
   public ResponseEntity<?> getMotorbike(@PathVariable(name = "id") Long id) {
     try {
       Motorbikes motorbike = motorbikesService.getMotorbike(id);
-      return ResponseEntity.ok(new MotorbikeResponse(true, motorbike));
+      return ResponseEntity.ok(new MotorbikeResponse(true, motorbike,motorbike.getUser().getId()));
     } catch (Exception e) {
       return ResponseEntity.badRequest().body(e.getMessage());
     }

@@ -11,4 +11,6 @@ import lombok.NoArgsConstructor;
 public class MotorbikeResponse {
   private Boolean status = true;
   private Motorbikes data;
+  private Long userId;
+  
 }
