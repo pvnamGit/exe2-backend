@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MotorbikesRepository extends JpaRepository<Motorbikes, Long> {
   Page<Motorbikes> findAll(Pageable pageable);
+  Page<Motorbikes> findAllByUserId(Pageable pageable, Long id);
 
   Page<Motorbikes> findAllByTitleContains(String title, Pageable pageable);
 }

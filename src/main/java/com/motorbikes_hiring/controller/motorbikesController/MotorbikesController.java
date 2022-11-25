@@ -37,6 +37,18 @@ public class MotorbikesController {
       return ResponseEntity.badRequest().body(e.getMessage());
     }
   }
+  @GetMapping("/your_motorbikes")
+  public ResponseEntity<?> getMotorbikesbyId(
+      @RequestParam(name = "title", required = false, defaultValue = "") String title,
+      @RequestParam(name = "page", required = false, defaultValue = "1") Integer page,@RequestParam(name = "userId") Long id ) {
+    try {
+      MotorbikesListResponse response = motorbikesService.getMotorbikesByUserId(title, page,id);
+      return ResponseEntity.ok(response);
+    } catch (Exception e) {
+      return ResponseEntity.badRequest().body(e.getMessage());
+    }
+  }
+
 
   @GetMapping("/motorbike/{id}")
   public ResponseEntity<?> getMotorbike(@PathVariable(name = "id") Long id) {

@@ -45,6 +45,20 @@ public class MotorbikesService {
     return response;
   }
 
+  public MotorbikesListResponse getMotorbikesByUserId(String title, Integer page, Long userId) {
+    Pageable pageable = PageRequest.of((page - 1), 9, Sort.Direction.DESC, "id");
+    Page<Motorbikes> motorbikesListResult = title.isEmpty() ? motorbikesRepository.findAllByUserId(pageable, userId) :
+        motorbikesRepository.findAllByTitleContains(title, pageable);
+    Long total = motorbikesListResult.getTotalElements();
+    List<Motorbikes> motorbikesList = motorbikesListResult.getContent();
+    MotorbikesListResponse response = new MotorbikesListResponse(true, motorbikesList, total);
+    return response;
+  }
+
+  
+
+
+
 
   public void createMotorBike(MotorbikeCreationRequest request) throws IllegalAccessException, DbxException, IOException {
     User user = userRepository.getById(request.getUserId());
